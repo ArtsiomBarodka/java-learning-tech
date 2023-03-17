@@ -12,7 +12,7 @@ public class FJPMergeSorterTest {
 
     @Test
     void sort(){
-        int[] arr = getArray(10000);
+        int[] arr = getArray(10000000);
 
         sorter.sort(arr);
 
