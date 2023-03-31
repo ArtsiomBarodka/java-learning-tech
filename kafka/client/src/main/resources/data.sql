@@ -1,0 +1,10 @@
+INSERT INTO kafka.order_table (created, updated, user_id, status) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1 , 'DELIVERED')
+INSERT INTO kafka.order_table (created, updated, user_id, status) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1 , 'DELIVERED')
+INSERT INTO kafka.order_table (created, updated, user_id, status) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2 , 'DELIVERED')
+
+INSERT INTO kafka.order_item (pizza_id, count, fk_order_id) VALUES (1 , 2, 1)
+INSERT INTO kafka.order_item (pizza_id, count, fk_order_id) VALUES (2 , 1, 1)
+INSERT INTO kafka.order_item (pizza_id, count, fk_order_id) VALUES (3 , 1, 2)
+INSERT INTO kafka.order_item (pizza_id, count, fk_order_id) VALUES (1 , 1, 3)
+INSERT INTO kafka.order_item (pizza_id, count, fk_order_id) VALUES (2 , 1, 3)
+INSERT INTO kafka.order_item (pizza_id, count, fk_order_id) VALUES (3 , 1, 3)
