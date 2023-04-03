@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NotificationMessage {
     private Long orderId;
+    private Long userId;
     private OrderStatus orderStatus;
 }

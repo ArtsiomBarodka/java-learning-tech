@@ -30,4 +30,7 @@ public class PropertiesConfig {
 
     @Value("${kafka.consumer.order.count}")
     private int kafkaConsumerOrderCount;
+
+    @Value("${kafka.consumer.order.palmetto.group.id}")
+    private String kafkaConsumerOrderPalmettoGroupId;
 }

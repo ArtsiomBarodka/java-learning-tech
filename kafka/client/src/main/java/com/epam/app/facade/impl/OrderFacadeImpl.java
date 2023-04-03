@@ -3,6 +3,7 @@ package com.epam.app.facade.impl;
 import com.epam.app.facade.OrderFacade;
 import com.epam.app.model.OrderStatus;
 import com.epam.app.model.dto.Order;
+import com.epam.app.model.dto.OrderItem;
 import com.epam.app.model.request.CreateOrderRequest;
 import com.epam.app.service.NotificationService;
 import com.epam.app.service.OrderService;
@@ -17,7 +18,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
     @Override
     public Order createOrder(CreateOrderRequest createOrderRequest) {
-        var createdOrder = orderService.createOrder(createOrderRequest);
+        var createdOrder = orderService.createOrder(toOrder(createOrderRequest));
         notificationService.sendNotification(createdOrder);
         return createdOrder;
     }
@@ -30,5 +31,15 @@ public class OrderFacadeImpl implements OrderFacade {
     @Override
     public Order getOrderById(Long orderId) {
         return orderService.getOrderById(orderId);
+    }
+
+    private Order toOrder(CreateOrderRequest createOrderRequest) {
+        var order = new Order();
+        order.setUserId(createOrderRequest.getUserId());
+        order.setOrderItems(createOrderRequest.getOrderItems()
+                .stream()
+                .map(item -> new OrderItem(item.getPizzaId(), item.getCount()))
+                .toList());
+        return order;
     }
 }

@@ -6,7 +6,6 @@ import com.epam.app.model.dto.Order;
 import com.epam.app.model.dto.OrderItem;
 import com.epam.app.model.entity.OrderEntity;
 import com.epam.app.model.entity.OrderItemEntity;
-import com.epam.app.model.request.CreateOrderRequest;
 import com.epam.app.repository.OrderRepository;
 import com.epam.app.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +19,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
     @Override
-    public Order createOrder(CreateOrderRequest createOrderRequest) {
-        final var newOrderEntity = toOrderEntity(createOrderRequest);
+    public Order createOrder(Order order) {
+        final var newOrderEntity = toOrderEntity(order);
         final var savedOrderEntity = orderRepository.save(newOrderEntity);
-        //send notification
+        final var savedOrder = toOrder(savedOrderEntity);
 
-        return toOrder(savedOrderEntity);
+        log.info("New order was created: {}", savedOrder);
+
+        return savedOrder;
     }
 
     @Override
@@ -56,10 +57,10 @@ public class OrderServiceImpl implements OrderService {
         return toOrder(orderEntity);
     }
 
-    private OrderEntity toOrderEntity(CreateOrderRequest createOrderRequest) {
+    private OrderEntity toOrderEntity(Order order) {
         var orderEntity = new OrderEntity();
-        orderEntity.setUserId(createOrderRequest.getUserId());
-        orderEntity.setOrderItems(createOrderRequest.getOrderItems()
+        orderEntity.setUserId(order.getUserId());
+        orderEntity.setOrderItems(order.getOrderItems()
                 .stream()
                 .map(item -> {
                     var orderItemEntity = new OrderItemEntity();

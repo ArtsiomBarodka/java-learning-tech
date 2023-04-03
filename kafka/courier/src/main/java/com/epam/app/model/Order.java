@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderMessage {
+public class Order {
     private Long orderId;
-    private Long userId;
-    private List<OrderItemMessage> orderItems;
+    public Long userId;
 }

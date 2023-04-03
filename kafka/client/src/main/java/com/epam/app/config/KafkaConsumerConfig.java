@@ -1,6 +1,6 @@
 package com.epam.app.config;
 
-import com.epam.app.model.OrderMessage;
+import com.epam.app.model.NotificationMessage;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -23,8 +23,8 @@ public class KafkaConsumerConfig {
     private final PropertiesConfig propertiesConfig;
 
     @Bean
-    public ConsumerFactory<String, OrderMessage> consumerOrderFactory() {
-        JsonDeserializer<OrderMessage> deserializer = new JsonDeserializer<>(OrderMessage.class);
+    public ConsumerFactory<String, NotificationMessage> consumerNotificationFactory() {
+        JsonDeserializer<NotificationMessage> deserializer = new JsonDeserializer<>(NotificationMessage.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
         deserializer.setUseTypeMapperForKey(true);
@@ -39,11 +39,11 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, OrderMessage> orderKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, OrderMessage> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, NotificationMessage> notificationKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, NotificationMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConcurrency(propertiesConfig.getKafkaConsumerOrderCount());
-        factory.setConsumerFactory(consumerOrderFactory());
+        factory.setConcurrency(propertiesConfig.getKafkaConsumerNotificationCount());
+        factory.setConsumerFactory(consumerNotificationFactory());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         return factory;
     }

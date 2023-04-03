@@ -1,6 +1,6 @@
 package com.epam.app.config;
 
-import com.epam.app.model.NotificationMessage;
+import com.epam.app.model.OrderMessage;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -20,7 +20,7 @@ public class KafkaProducerConfig {
     private final PropertiesConfig propertiesConfig;
 
     @Bean
-    public ProducerFactory<String, NotificationMessage> notificationProducerFactory() {
+    public ProducerFactory<String, OrderMessage> orderProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
 
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesConfig.getKafkaServer());
@@ -32,7 +32,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, NotificationMessage> notificationKafkaTemplate() {
-        return new KafkaTemplate<>(notificationProducerFactory());
+    public KafkaTemplate<String, OrderMessage> orderKafkaTemplate() {
+        return new KafkaTemplate<>(orderProducerFactory());
     }
 }
