@@ -16,6 +16,9 @@ public class PropertiesConfig {
     @Value("${kafka.topic.notification.name}")
     private String kafkaTopicNotificationName;
 
+    @Value("${kafka.consumer.notification.offset}")
+    private String kafkaConsumerNotificationOffset;
+
     @Value("${kafka.consumer.notification.count}")
     private int kafkaConsumerNotificationCount;
 

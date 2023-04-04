@@ -28,6 +28,9 @@ public class PropertiesConfig {
     @Value("${kafka.topic.notification.replicas}")
     private int kafkaTopicNotificationReplicas;
 
+    @Value("${kafka.consumer.order.offset}")
+    private String kafkaConsumerOrderOffset;
+
     @Value("${kafka.consumer.order.count}")
     private int kafkaConsumerOrderCount;
 
