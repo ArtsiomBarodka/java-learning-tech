@@ -10,6 +10,7 @@ import com.epam.app.repository.OrderRepository;
 import com.epam.app.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -19,7 +20,8 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
     @Override
-    public Order createOrder(Order order) {
+    @NonNull
+    public Order createOrder(@NonNull Order order) {
         final var newOrderEntity = toOrderEntity(order);
         final var savedOrderEntity = orderRepository.save(newOrderEntity);
         final var savedOrder = toOrder(savedOrderEntity);
@@ -30,7 +32,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateOrderStatus(Long orderId, OrderStatus orderStatus) {
+    @NonNull
+    public Order updateOrderStatus(@NonNull Long orderId, @NonNull OrderStatus orderStatus) {
         final var existingOrderEntity = orderRepository.findById(orderId)
                 .orElseThrow(() -> {
                     log.warn("Order with (id = {}) is not found", orderId);
@@ -45,7 +48,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Long orderId) {
+    @NonNull
+    public Order getOrderById(@NonNull Long orderId) {
         final var orderEntity = orderRepository.findById(orderId)
                 .orElseThrow(() -> {
                     log.warn("Order with (id = {}) is not found", orderId);

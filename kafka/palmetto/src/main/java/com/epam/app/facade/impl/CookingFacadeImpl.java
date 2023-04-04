@@ -8,6 +8,7 @@ import com.epam.app.model.OrderStatus;
 import com.epam.app.service.CookingService;
 import com.epam.app.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +18,7 @@ public class CookingFacadeImpl implements CookingFacade {
     private final NotificationService notificationService;
 
     @Override
-    public void cook(OrderMessage orderMessage) {
+    public void cook(@NonNull OrderMessage orderMessage) {
         var order = toOrder(orderMessage);
         notificationService.notifyClient(order, OrderStatus.COOKING);
         cookingService.cook(order);

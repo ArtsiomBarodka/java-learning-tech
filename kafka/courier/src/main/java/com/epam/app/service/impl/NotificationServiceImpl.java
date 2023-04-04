@@ -8,6 +8,7 @@ import com.epam.app.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -18,7 +19,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final PropertiesConfig propertiesConfig;
 
     @Override
-    public void notifyClient(Order order, OrderStatus orderStatus) {
+    public void notifyClient(@NonNull Order order, @NonNull OrderStatus orderStatus) {
         String topic = propertiesConfig.getKafkaTopicNotificationName();
         String key = String.valueOf(order.getUserId());
         var message = new NotificationMessage(order.getOrderId(), order.getUserId(), orderStatus);

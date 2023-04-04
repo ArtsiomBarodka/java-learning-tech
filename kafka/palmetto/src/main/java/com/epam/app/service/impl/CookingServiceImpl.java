@@ -5,6 +5,7 @@ import com.epam.app.model.OrderItem;
 import com.epam.app.service.CookingService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import static java.lang.Thread.sleep;
@@ -13,7 +14,7 @@ import static java.lang.Thread.sleep;
 @Service
 public class CookingServiceImpl implements CookingService {
     @Override
-    public void cook(Order order) {
+    public void cook(@NonNull Order order) {
         log.info("Starting cooking the order: {} ", order);
         order.getOrderItems().forEach(this::cook);
         log.info("Finished cooking the order: {} ", order);

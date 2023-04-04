@@ -7,6 +7,7 @@ import com.epam.app.model.OrderStatus;
 import com.epam.app.service.CourierService;
 import com.epam.app.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,7 @@ public class CourierFacadeImpl implements CourierFacade {
     private final NotificationService notificationService;
 
     @Override
-    public void deliver(NotificationMessage notificationMessage) {
+    public void deliver(@NonNull NotificationMessage notificationMessage) {
         var order = new Order(notificationMessage.getOrderId(), notificationMessage.getUserId());
         notificationService.notifyClient(order, OrderStatus.DELIVERING);
         courierService.deliverOrder(order);

@@ -8,6 +8,7 @@ import com.epam.app.model.request.CreateOrderRequest;
 import com.epam.app.service.NotificationService;
 import com.epam.app.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,19 +18,22 @@ public class OrderFacadeImpl implements OrderFacade {
     private final NotificationService notificationService;
 
     @Override
-    public Order createOrder(CreateOrderRequest createOrderRequest) {
+    @NonNull
+    public Order createOrder(@NonNull CreateOrderRequest createOrderRequest) {
         var createdOrder = orderService.createOrder(toOrder(createOrderRequest));
         notificationService.sendNotification(createdOrder);
         return createdOrder;
     }
 
     @Override
-    public Order updateOrderStatus(Long orderId, OrderStatus orderStatus) {
+    @NonNull
+    public Order updateOrderStatus(@NonNull Long orderId, @NonNull OrderStatus orderStatus) {
         return orderService.updateOrderStatus(orderId, orderStatus);
     }
 
     @Override
-    public Order getOrderById(Long orderId) {
+    @NonNull
+    public Order getOrderById(@NonNull Long orderId) {
         return orderService.getOrderById(orderId);
     }
 
