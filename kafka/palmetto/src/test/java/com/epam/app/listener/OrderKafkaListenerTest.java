@@ -2,9 +2,11 @@ package com.epam.app.listener;
 
 import com.epam.app.config.KafkaConsumerConfig;
 import com.epam.app.config.PropertiesConfig;
+import com.epam.app.exception.ValidationException;
 import com.epam.app.facade.CookingFacade;
 import com.epam.app.model.OrderItemMessage;
 import com.epam.app.model.OrderMessage;
+import com.epam.app.utils.Validator;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,14 +34,17 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @Testcontainers
-@ContextConfiguration(classes = {OrderKafkaListenerTest.TestConfig.class, KafkaConsumerConfig.class, PropertiesConfig.class, OrderKafkaListener.class})
+@ContextConfiguration(classes = {OrderKafkaListenerTest.TestConfig.class, KafkaConsumerConfig.class, PropertiesConfig.class, OrderKafkaListener.class, Validator.class})
 public class OrderKafkaListenerTest {
     private static final String TOPIC = "Test-topic";
 
@@ -51,13 +56,20 @@ public class OrderKafkaListenerTest {
     private KafkaTemplate<String, OrderMessage> kafkaTemplate;
 
     @MockBean
+    private Validator validator;
+
+    @MockBean
     private CookingFacade cookingFacade;
+
 
     @DynamicPropertySource
     static void registerKafkaProperties(DynamicPropertyRegistry registry) {
         registry.add("kafka.bootstrapAddress", KAFKA::getBootstrapServers);
         registry.add("kafka.topic.order.name", () -> TOPIC);
         registry.add("kafka.consumer.order.offset", () -> "earliest");
+        registry.add("kafka.consumer.order.retry.interval", () -> 1);
+        registry.add("kafka.consumer.order.retry.attempts", () -> 3);
+
     }
 
     @Test
@@ -72,6 +84,23 @@ public class OrderKafkaListenerTest {
         // Assert
         Awaitility.await().atMost(Duration.ofSeconds(10)).untilAsserted(() -> {
             verify(cookingFacade, times(1)).cook(eq(orderMessage));
+        });
+    }
+
+    @Test
+    void processOrderTest_retry() {
+        // Arrange
+        var key = "key";
+        var orderMessage = new OrderMessage(1L, 1L, List.of(new OrderItemMessage(1L, 0)));
+        doThrow(new ValidationException("error")).when(validator).validateMessage(any());
+
+        // Act
+        kafkaTemplate.send(TOPIC, key, orderMessage);
+
+        // Assert
+        Awaitility.await().atMost(Duration.ofSeconds(15)).untilAsserted(() -> {
+            verifyNoInteractions(cookingFacade);
+            verify(validator, times(4)).validateMessage(eq(orderMessage));
         });
     }
 

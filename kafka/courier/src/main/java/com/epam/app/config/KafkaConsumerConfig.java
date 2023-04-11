@@ -24,8 +24,7 @@ import java.util.Map;
 public class KafkaConsumerConfig {
     private final PropertiesConfig propertiesConfig;
 
-    @Bean
-    public ConsumerFactory<String, NotificationMessage> consumerNotificationFactory() {
+    private ConsumerFactory<String, NotificationMessage> consumerNotificationFactory() {
         JsonDeserializer<NotificationMessage> deserializer = new JsonDeserializer<>(NotificationMessage.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");

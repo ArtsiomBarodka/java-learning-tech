@@ -10,6 +10,8 @@ import com.epam.app.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
     @Override
     @NonNull
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Order getOrderById(@NonNull Long orderId) {
         return orderService.getOrderById(orderId);
     }

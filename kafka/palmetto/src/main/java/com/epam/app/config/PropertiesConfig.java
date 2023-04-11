@@ -34,6 +34,12 @@ public class PropertiesConfig {
     @Value("${kafka.consumer.order.count}")
     private int kafkaConsumerOrderCount;
 
+    @Value("${kafka.consumer.order.retry.interval}")
+    private int kafkaConsumerOrderRetryInterval;
+
+    @Value("${kafka.consumer.order.retry.attempts}")
+    private int kafkaConsumerOrderRetryAttempts;
+
     @Value("${kafka.consumer.order.palmetto.group.id}")
     private String kafkaConsumerOrderPalmettoGroupId;
 }

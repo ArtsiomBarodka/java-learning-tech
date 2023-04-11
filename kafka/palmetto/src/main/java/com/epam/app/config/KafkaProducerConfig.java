@@ -19,8 +19,7 @@ import java.util.Map;
 public class KafkaProducerConfig {
     private final PropertiesConfig propertiesConfig;
 
-    @Bean
-    public ProducerFactory<String, NotificationMessage> notificationProducerFactory() {
+    private ProducerFactory<String, NotificationMessage> notificationProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
 
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesConfig.getKafkaServer());

@@ -12,6 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.function.Supplier;
 
 @Slf4j
 @Service
@@ -21,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @NonNull
+    @Transactional
     public Order createOrder(@NonNull Order order) {
         final var newOrderEntity = toOrderEntity(order);
         final var savedOrderEntity = orderRepository.save(newOrderEntity);
@@ -33,12 +38,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @NonNull
+    @Transactional
     public Order updateOrderStatus(@NonNull Long orderId, @NonNull OrderStatus orderStatus) {
         final var existingOrderEntity = orderRepository.findById(orderId)
-                .orElseThrow(() -> {
-                    log.warn("Order with (id = {}) is not found", orderId);
-                    return new ObjectNotFoundException(String.format("Order with (id = %d) is not found", orderId));
-                });
+                .orElseThrow(trowOrderNotFoundException(orderId));
 
         existingOrderEntity.setStatus(orderStatus);
 
@@ -49,12 +52,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @NonNull
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Order getOrderById(@NonNull Long orderId) {
         final var orderEntity = orderRepository.findById(orderId)
-                .orElseThrow(() -> {
-                    log.warn("Order with (id = {}) is not found", orderId);
-                    return new ObjectNotFoundException(String.format("Order with (id = %d) is not found", orderId));
-                });
+                .orElseThrow(trowOrderNotFoundException(orderId));
 
         log.info("Order with (id = {}) is fetched. Order: {}", orderId, orderEntity);
 
@@ -80,22 +81,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order toOrder(OrderEntity orderEntity) {
-        var order = new Order();
-        order.setOrderId(orderEntity.getId());
-        order.setUserId(orderEntity.getUserId());
-        order.setCreated(orderEntity.getCreated());
-        order.setUpdated(orderEntity.getUpdated());
-        order.setOrderStatus(orderEntity.getStatus());
-        order.setOrderItems(orderEntity.getOrderItems()
-                .stream()
-                .map(item -> {
-                    var orderItem = new OrderItem();
-                    orderItem.setPizzaId(item.getPizzaId());
-                    orderItem.setCount(item.getCount());
-                    return orderItem;
-                })
-                .toList());
+        return Order.builder()
+                .orderId(orderEntity.getId())
+                .userId(orderEntity.getUserId())
+                .created(orderEntity.getCreated())
+                .updated(orderEntity.getUpdated())
+                .orderStatus(orderEntity.getStatus())
+                .orderItems(orderEntity.getOrderItems()
+                        .stream()
+                        .map(this::getOrderItemEntityOrderItemFunction)
+                        .toList())
+                .build();
+    }
 
-        return order;
+    private OrderItem getOrderItemEntityOrderItemFunction(OrderItemEntity item) {
+        return OrderItem.builder()
+                .pizzaId(item.getPizzaId())
+                .count(item.getCount())
+                .build();
+    }
+
+    private Supplier<ObjectNotFoundException> trowOrderNotFoundException(Long orderId) {
+        return () -> {
+            log.warn("Order with (id = {}) is not found", orderId);
+            return new ObjectNotFoundException(String.format("Order with (id = %d) is not found", orderId));
+        };
     }
 }
