@@ -20,7 +20,7 @@ public class OrderKafkaListener {
 
     @KafkaListener(topics = "#{'${kafka.topic.order.name}'.split(',')}",
             groupId = "${kafka.consumer.order.palmetto.group.id}",
-            containerFactory = "orderKafkaListenerContainerFactory")
+            containerFactory = "orderRetryWithDlqKafkaListenerContainerFactory")
     public void processOrder(OrderMessage orderMessage,
                              @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                              @Header(KafkaHeaders.RECEIVED_KEY) String key,

@@ -28,6 +28,15 @@ public class PropertiesConfig {
     @Value("${kafka.topic.notification.replicas}")
     private int kafkaTopicNotificationReplicas;
 
+    @Value("${kafka.topic.order-dlt.name}")
+    private String kafkaTopicOrderDltName;
+
+    @Value("${kafka.topic.order-dlt.partitions}")
+    private int kafkaTopicOrderDltPartitions;
+
+    @Value("${kafka.topic.order-dlt.replicas}")
+    private int kafkaTopicOrderDltReplicas;
+
     @Value("${kafka.consumer.order.offset}")
     private String kafkaConsumerOrderOffset;
 

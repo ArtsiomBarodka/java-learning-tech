@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
-    private final KafkaTemplate<String, NotificationMessage> kafkaTemplate;
+    private final KafkaTemplate<String, NotificationMessage> notificationKafkaTemplate;
     private final PropertiesConfig propertiesConfig;
 
     @Override
@@ -24,7 +24,7 @@ public class NotificationServiceImpl implements NotificationService {
         String key = String.valueOf(order.getUserId());
         var message = new NotificationMessage(order.getOrderId(), order.getUserId(), orderStatus);
         log.info("Sending Order notification to {} topic with id {} and Message: {}", topic, key, message);
-        kafkaTemplate.send(topic, key, message);
+        notificationKafkaTemplate.send(topic, key, message);
     }
 
 }

@@ -53,7 +53,7 @@ public class OrderKafkaListenerTest {
             new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:6.2.10"));
 
     @Autowired
-    private KafkaTemplate<String, OrderMessage> kafkaTemplate;
+    private KafkaTemplate<String, OrderMessage> kafkaTestTemplate;
 
     @MockBean
     private Validator validator;
@@ -69,7 +69,6 @@ public class OrderKafkaListenerTest {
         registry.add("kafka.consumer.order.offset", () -> "earliest");
         registry.add("kafka.consumer.order.retry.interval", () -> 1);
         registry.add("kafka.consumer.order.retry.attempts", () -> 3);
-
     }
 
     @Test
@@ -79,7 +78,7 @@ public class OrderKafkaListenerTest {
         var orderMessage = new OrderMessage(1L, 1L, List.of(new OrderItemMessage(1L, 1)));
 
         // Act
-        kafkaTemplate.send(TOPIC, key, orderMessage);
+        kafkaTestTemplate.send(TOPIC, key, orderMessage);
 
         // Assert
         Awaitility.await().atMost(Duration.ofSeconds(10)).untilAsserted(() -> {
@@ -95,7 +94,7 @@ public class OrderKafkaListenerTest {
         doThrow(new ValidationException("error")).when(validator).validateMessage(any());
 
         // Act
-        kafkaTemplate.send(TOPIC, key, orderMessage);
+        kafkaTestTemplate.send(TOPIC, key, orderMessage);
 
         // Assert
         Awaitility.await().atMost(Duration.ofSeconds(15)).untilAsserted(() -> {
@@ -107,7 +106,7 @@ public class OrderKafkaListenerTest {
     @TestConfiguration
     public static class TestConfig {
         @Bean
-        public KafkaTemplate<String, OrderMessage> kafkaTemplate() {
+        public KafkaTemplate<String, OrderMessage> kafkaTestTemplate() {
             Map<String, Object> producerProps = KafkaTestUtils.producerProps(KAFKA.getBootstrapServers());
             ProducerFactory<String, OrderMessage> producerFactory =
                     new DefaultKafkaProducerFactory<>(

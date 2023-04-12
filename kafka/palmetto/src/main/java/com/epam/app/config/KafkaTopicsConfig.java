@@ -32,6 +32,15 @@ public class KafkaTopicsConfig {
     }
 
     @Bean
+    public NewTopic createOrderDltTopic() {
+        return TopicBuilder.name(propertiesConfig.getKafkaTopicOrderDltName())
+                .partitions(propertiesConfig.getKafkaTopicOrderDltPartitions())
+                .replicas(propertiesConfig.getKafkaTopicOrderDltReplicas())
+                .config(TopicConfig.COMPRESSION_TYPE_CONFIG, "zstd")
+                .build();
+    }
+
+    @Bean
     public NewTopic createNotificationTopic() {
         return TopicBuilder.name(propertiesConfig.getKafkaTopicNotificationName())
                 .partitions(propertiesConfig.getKafkaTopicNotificationPartitions())
