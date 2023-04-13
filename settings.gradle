@@ -1,2 +1,11 @@
 include 'advanced-multithreading'
+include 'kafka'
+include 'kafka:client'
+findProject(':kafka:client')?.name = 'client'
+include 'kafka:palmetto'
+findProject(':kafka:palmetto')?.name = 'palmetto'
+include 'kafka:courier'
+findProject(':kafka:courier')?.name = 'courier'
+include 'kafka:common'
+findProject(':kafka:common')?.name = 'common'
 

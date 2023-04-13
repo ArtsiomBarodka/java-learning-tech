@@ -1,0 +1,15 @@
+ext {
+    mySqlConnectorVersion = '8.0.22'
+}
+
+dependencies {
+    implementation project(':kafka:common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
+}
+
+bootJar {
+    enabled = true
+}

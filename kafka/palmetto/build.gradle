@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':kafka:common')
+}
+
+bootJar {
+    enabled = true
+}
