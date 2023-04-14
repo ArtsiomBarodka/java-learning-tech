@@ -18,7 +18,6 @@ public class KafkaEventMessaging implements EventMessaging {
     private KafkaPropertiesConfig kafkaPropertiesConfig;
     @Autowired
     private KafkaTemplate<String, Event> eventKafkaTemplate;
-
     @Autowired
     private KafkaTemplate<String, Long> deleteEventKafkaTemplate;
 

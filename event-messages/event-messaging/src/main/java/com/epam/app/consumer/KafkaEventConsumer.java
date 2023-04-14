@@ -4,11 +4,13 @@ import com.epam.app.Event;
 import com.epam.app.EventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
+@Profile("kafka")
 @Slf4j
 @Component
 @RequiredArgsConstructor
