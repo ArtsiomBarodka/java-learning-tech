@@ -3,8 +3,8 @@ package com.epam.app;
 import com.epam.app.exception.ObjectNotFoundException;
 import com.epam.app.repository.EventRepository;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +12,21 @@ import java.util.function.Supplier;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
-    private final EventRepository eventRepository;
+    @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired(required = false)
+    private EventMessaging eventMessaging;
+
 
     @Override
     public @NonNull Event createEvent(@NonNull Event event) {
         final var createdEvent = eventRepository.createEvent(event);
+
+        if (eventMessaging != null) {
+            eventMessaging.createEvent(createdEvent);
+        }
 
         log.info("The New Event was created. Created Event: {}", createdEvent);
 
@@ -32,6 +40,9 @@ public class EventServiceImpl implements EventService {
 
         updateEventFields(storedEvent, event);
         final var updatedEvent = eventRepository.updateEvent(id, storedEvent);
+        if (eventMessaging != null) {
+            eventMessaging.updateEvent(updatedEvent);
+        }
 
         log.info("The Event with id = {} was updated. Updated Event: {}", id, updatedEvent);
 
@@ -52,6 +63,10 @@ public class EventServiceImpl implements EventService {
     public @NonNull Event deleteEvent(@NonNull Long id) {
         final var deletedEvent = eventRepository.deleteEvent(id)
                 .orElseThrow(throwEventNotFoundException(id));
+
+        if (eventMessaging != null) {
+            eventMessaging.deleteEvent(id);
+        }
 
         log.info("The Event with id = {} was deleted. Deleted Event: {}", id, deletedEvent);
 
