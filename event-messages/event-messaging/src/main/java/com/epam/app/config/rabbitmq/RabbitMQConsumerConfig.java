@@ -5,6 +5,8 @@ import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.retry.MessageRecoverer;
+import org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +23,19 @@ import java.util.concurrent.TimeUnit;
 public class RabbitMQConsumerConfig {
     private final RabbitMQPropertiesConfig rabbitMQPropertiesConfig;
 
-    private RetryOperationsInterceptor getRetryOperationsInterceptor() {
+    @Bean
+    public MessageRecoverer recoverer() {
+        return new RejectAndDontRequeueRecoverer(); // sent the message to DLQ after retry
+    }
+
+    @Bean
+    public RetryOperationsInterceptor getRetryOperationsInterceptor() {
         var fixedBackOffPolicy = new FixedBackOffPolicy();
         fixedBackOffPolicy.setBackOffPeriod(TimeUnit.SECONDS.toMillis(rabbitMQPropertiesConfig.getRabbitMQConsumerRetryDelay()));
-
         return RetryInterceptorBuilder.stateless()
                 .maxAttempts(rabbitMQPropertiesConfig.getRabbitMQConsumerRetryAttempts())
                 .backOffPolicy(fixedBackOffPolicy)
+                .recoverer(recoverer())
                 .build();
     }
 

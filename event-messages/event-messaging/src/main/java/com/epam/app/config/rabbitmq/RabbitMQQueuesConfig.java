@@ -3,7 +3,6 @@ package com.epam.app.config.rabbitmq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.context.annotation.Bean;
@@ -17,19 +16,8 @@ public class RabbitMQQueuesConfig {
     private final RabbitMQPropertiesConfig rabbitMQPropertiesConfig;
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        var connectionFactory = new CachingConnectionFactory(
-                rabbitMQPropertiesConfig.getRabbitMQHost(),
-                rabbitMQPropertiesConfig.getRabbitMQPort());
-
-        connectionFactory.setUsername(rabbitMQPropertiesConfig.getRabbitMQUsername());
-        connectionFactory.setPassword(rabbitMQPropertiesConfig.getRabbitMQPassword());
-        return connectionFactory;
-    }
-
-    @Bean
-    public RabbitAdmin admin(ConnectionFactory cf) {
-        return new RabbitAdmin(cf);
+    public RabbitAdmin admin(ConnectionFactory connectionFactory) {
+        return new RabbitAdmin(connectionFactory);
     }
 
     @Bean
@@ -50,24 +38,24 @@ public class RabbitMQQueuesConfig {
     @Bean
     public Queue createCreateRequestQueue() {
         return QueueBuilder.nonDurable(rabbitMQPropertiesConfig.getRabbitMQQueueCreateRequestName())
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", rabbitMQPropertiesConfig.getRabbitMQQueueDlqCreateRequestName())
+                .deadLetterExchange("")
+                .deadLetterRoutingKey(rabbitMQPropertiesConfig.getRabbitMQQueueDlqCreateRequestName())
                 .build();
     }
 
     @Bean
     public Queue createUpdateRequestQueue() {
         return QueueBuilder.nonDurable(rabbitMQPropertiesConfig.getRabbitMQQueueUpdateRequestName())
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", rabbitMQPropertiesConfig.getRabbitMQQueueDlqUpdateRequestName())
+                .deadLetterExchange("")
+                .deadLetterRoutingKey(rabbitMQPropertiesConfig.getRabbitMQQueueDlqUpdateRequestName())
                 .build();
     }
 
     @Bean
     public Queue createDeleteRequestQueue() {
         return QueueBuilder.nonDurable(rabbitMQPropertiesConfig.getRabbitMQQueueDeleteRequestName())
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", rabbitMQPropertiesConfig.getRabbitMQQueueDlqDeleteRequestName())
+                .deadLetterExchange("")
+                .deadLetterRoutingKey(rabbitMQPropertiesConfig.getRabbitMQQueueDlqDeleteRequestName())
                 .build();
     }
 
