@@ -73,6 +73,10 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.topic.delete-request.replicas}")
     private int kafkaTopicDeleteRequestReplicas;
 
+
+    @Value("${kafka.consumer.request.offset}")
+    private String kafkaConsumerRequestOffset;
+
     @Value("${kafka.consumer.request.count}")
     private int kafkaConsumerRequestCount;
 }

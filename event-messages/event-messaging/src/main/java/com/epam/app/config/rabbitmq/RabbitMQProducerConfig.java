@@ -34,9 +34,10 @@ public class RabbitMQProducerConfig {
     }
 
     @Bean
-    public RabbitTemplate deleteRabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate deleteRabbitTemplate(ConnectionFactory connectionFactory, MessageConverter longMessageConverter) {
         var template = new RabbitTemplate(connectionFactory);
         template.setRetryTemplate(getRetryTemplate());
+        template.setMessageConverter(longMessageConverter);
         return template;
     }
 }

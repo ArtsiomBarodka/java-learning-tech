@@ -51,9 +51,10 @@ public class RabbitMQConsumerConfig {
     }
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerDeleteRequestEventContainerFactory(ConnectionFactory connectionFactory, MessageConverter jsonMessageConverter) {
+    public SimpleRabbitListenerContainerFactory rabbitListenerDeleteRequestEventContainerFactory(ConnectionFactory connectionFactory, MessageConverter longMessageConverter) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
+        factory.setMessageConverter(longMessageConverter);
         factory.setConcurrentConsumers(rabbitMQPropertiesConfig.getRabbitMQConsumerConcurrent());
         factory.setMaxConcurrentConsumers(rabbitMQPropertiesConfig.getRabbitMQConsumerMaxConcurrent());
         factory.setAdviceChain(getRetryOperationsInterceptor());
