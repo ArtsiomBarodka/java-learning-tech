@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group 'org.example'
+version '0.0.1'
+
+ext {
+    junitVersion = '5.8.1'
+    r2dbcMySqlVersion = '0.8.2.RELEASE'
+    mySqlConnectorVersion = '8.0.22'
+}
+
+sourceCompatibility = '1.17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+
+    implementation "dev.miku:r2dbc-mysql:${r2dbcMySqlVersion}"
+    implementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    enabled = true
+}
