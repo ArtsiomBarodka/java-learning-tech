@@ -19,7 +19,7 @@ public class ActiveMQProducerConfig {
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(activeMQConnectionFactory);
         template.setMessageConverter(jsonMessageConverter);
-        template.setPubSubDomain(false); //use queues (can also use topics if "true")
+        template.setPubSubDomain(false);
         return template;
     }
 
@@ -27,7 +27,7 @@ public class ActiveMQProducerConfig {
     public JmsTemplate deleteEventJmsTemplate(ConnectionFactory activeMQConnectionFactory) {
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(activeMQConnectionFactory);
-        template.setPubSubDomain(false); //use queues (can also use topics if "true")
+        template.setPubSubDomain(false);
         return template;
     }
 }

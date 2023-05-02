@@ -4,8 +4,8 @@ import com.epam.app.Event;
 import com.epam.app.EventMessaging;
 import com.epam.app.config.kafka.KafkaPropertiesConfig;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Profile("kafka")
 @Service
+@RequiredArgsConstructor
 public class KafkaEventMessaging implements EventMessaging {
-    @Autowired
-    private KafkaPropertiesConfig kafkaPropertiesConfig;
-    @Autowired
-    private KafkaTemplate<String, Event> eventKafkaTemplate;
-    @Autowired
-    private KafkaTemplate<String, Long> deleteEventKafkaTemplate;
+
+    private final KafkaPropertiesConfig kafkaPropertiesConfig;
+
+    private final KafkaTemplate<String, Event> eventKafkaTemplate;
+
+    private final KafkaTemplate<String, Long> deleteEventKafkaTemplate;
 
     @Override
     public void createEvent(@NonNull Event event) {

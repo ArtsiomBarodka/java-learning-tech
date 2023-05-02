@@ -30,7 +30,7 @@ public class ActiveMQConsumerConfig {
         var containerFactory = new DefaultJmsListenerContainerFactory();
         containerFactory.setConnectionFactory(activeMQConnectionFactory);
         containerFactory.setMessageConverter(jsonMessageConverter);
-        containerFactory.setPubSubDomain(false); //use queues (can also use topics if "true")
+        containerFactory.setPubSubDomain(false);
         containerFactory.setConcurrency(CONCURRENCY_PATTERN.formatted(
                 activeMQPropertiesConfig.getActiveMQConsumerConcurrencyMin(),
                 activeMQPropertiesConfig.getActiveMQConsumerConcurrencyMax()));
@@ -43,7 +43,7 @@ public class ActiveMQConsumerConfig {
     public DefaultJmsListenerContainerFactory jmsListenerDeleteRequestEventContainerFactory(ConnectionFactory activeMQConnectionFactory) {
         var containerFactory = new DefaultJmsListenerContainerFactory();
         containerFactory.setConnectionFactory(activeMQConnectionFactory);
-        containerFactory.setPubSubDomain(false); //use queues (can also use topics if "true")
+        containerFactory.setPubSubDomain(false);
         containerFactory.setConcurrency(CONCURRENCY_PATTERN.formatted(
                 activeMQPropertiesConfig.getActiveMQConsumerConcurrencyMin(),
                 activeMQPropertiesConfig.getActiveMQConsumerConcurrencyMax()));

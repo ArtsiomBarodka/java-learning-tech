@@ -2,11 +2,12 @@ package com.epam.app.converter;
 
 import com.epam.app.Event;
 import com.epam.app.request.EventCreateRequest;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FromCreateRequestToDtoEventConverter implements Converter<Event, EventCreateRequest> {
+public class FromCreateRequestToDtoEventConverter implements Converter<EventCreateRequest, Event> {
     @Override
     public @NonNull Event convert(@NonNull EventCreateRequest source) {
         var event = new Event();

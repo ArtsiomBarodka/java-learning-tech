@@ -4,6 +4,7 @@ import com.epam.app.Event;
 import com.epam.app.EventMessaging;
 import com.epam.app.config.rabbitmq.RabbitMQPropertiesConfig;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,14 @@ import org.springframework.stereotype.Service;
 @Profile("rabbitmq")
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RabbitMQEventMessaging implements EventMessaging {
     @Autowired
-    private RabbitMQPropertiesConfig rabbitMQPropertiesConfig;
+    private final RabbitMQPropertiesConfig rabbitMQPropertiesConfig;
     @Autowired
-    private RabbitTemplate eventRabbitTemplate;
+    private final RabbitTemplate eventRabbitTemplate;
     @Autowired
-    private RabbitTemplate deleteRabbitTemplate;
+    private final RabbitTemplate deleteRabbitTemplate;
 
     @Override
     public void createEvent(@NonNull Event event) {

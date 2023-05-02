@@ -27,7 +27,7 @@ public class ActiveMQEventConsumer {
             log.info("Create Event is received: destination = {}, event = {}", destination, event);
 
             eventService.createEvent(event);
-            return null;
+            return true;
         });
     }
 

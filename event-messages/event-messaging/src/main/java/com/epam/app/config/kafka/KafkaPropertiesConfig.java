@@ -12,8 +12,6 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.bootstrapAddress}")
     private String kafkaServer;
 
-    //topics
-    //create-event
     @Value("${kafka.topic.create-event.name}")
     private String kafkaTopicCreateEventName;
 
@@ -23,7 +21,6 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.topic.create-event.replicas}")
     private int kafkaTopicCreateEventReplicas;
 
-    //update-event
     @Value("${kafka.topic.update-event.name}")
     private String kafkaTopicUpdateEventName;
 
@@ -33,7 +30,6 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.topic.update-event.replicas}")
     private int kafkaTopicUpdateEventReplicas;
 
-    //delete-event
     @Value("${kafka.topic.delete-event.name}")
     private String kafkaTopicDeleteEventName;
 
@@ -43,7 +39,6 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.topic.delete-event.replicas}")
     private int kafkaTopicDeleteEventReplicas;
 
-    //create-request
     @Value("${kafka.topic.create-request.name}")
     private String kafkaTopicCreateRequestName;
 
@@ -53,7 +48,6 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.topic.create-request.replicas}")
     private int kafkaTopicCreateRequestReplicas;
 
-    //update-request
     @Value("${kafka.topic.update-request.name}")
     private String kafkaTopicUpdateRequestName;
 
@@ -63,7 +57,6 @@ public class KafkaPropertiesConfig {
     @Value("${kafka.topic.update-request.replicas}")
     private int kafkaTopicUpdateRequestReplicas;
 
-    //delete-request
     @Value("${kafka.topic.delete-request.name}")
     private String kafkaTopicDeleteRequestName;
 
@@ -72,7 +65,6 @@ public class KafkaPropertiesConfig {
 
     @Value("${kafka.topic.delete-request.replicas}")
     private int kafkaTopicDeleteRequestReplicas;
-
 
     @Value("${kafka.consumer.request.offset}")
     private String kafkaConsumerRequestOffset;

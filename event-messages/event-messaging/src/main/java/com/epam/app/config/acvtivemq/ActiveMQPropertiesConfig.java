@@ -18,32 +18,24 @@ public class ActiveMQPropertiesConfig {
     @Value("${activemq.password}")
     private String activeMQPassword;
 
-    //queues
-    //create-event
     @Value("${activemq.queue.create-event.name}")
     private String activeMQQueueCreateEventName;
 
-    //update-event
     @Value("${activemq.queue.update-event.name}")
     private String activeMQQueueUpdateEventName;
 
-    //delete-event
     @Value("${activemq.queue.delete-event.name}")
     private String activeMQQueueDeleteEventName;
 
-    //create-request
     @Value("${activemq.queue.create-request.name}")
     private String activeMQQueueCreateRequestName;
 
-    //update-request
     @Value("${activemq.queue.update-request.name}")
     private String activeMQQueueUpdateRequestName;
 
-    //delete-request
     @Value("${activemq.queue.delete-request.name}")
     private String activeMQQueueDeleteRequestName;
 
-    //consumers
     @Value("${activemq.consumer.concurrency.min}")
     private int activeMQConsumerConcurrencyMin;
 

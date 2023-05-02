@@ -4,6 +4,7 @@ import com.epam.app.Event;
 import com.epam.app.EventMessaging;
 import com.epam.app.config.acvtivemq.ActiveMQPropertiesConfig;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -13,9 +14,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Profile("activemq")
 @Service
+@RequiredArgsConstructor
 public class ActiveMQEventMessaging implements EventMessaging {
-    @Autowired
-    private ActiveMQPropertiesConfig activeMQPropertiesConfig;
+
+    private final ActiveMQPropertiesConfig activeMQPropertiesConfig;
 
     @Autowired
     private JmsTemplate eventJmsTemplate;

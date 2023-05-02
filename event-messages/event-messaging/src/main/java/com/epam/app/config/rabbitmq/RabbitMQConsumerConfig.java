@@ -25,7 +25,7 @@ public class RabbitMQConsumerConfig {
 
     @Bean
     public MessageRecoverer recoverer() {
-        return new RejectAndDontRequeueRecoverer(); // sent the message to DLQ after retry
+        return new RejectAndDontRequeueRecoverer();
     }
 
     @Bean

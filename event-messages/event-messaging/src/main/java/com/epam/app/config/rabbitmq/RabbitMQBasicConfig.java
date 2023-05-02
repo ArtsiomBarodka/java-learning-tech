@@ -46,20 +46,17 @@ public class RabbitMQBasicConfig {
         return new MessageConverter() {
             @Override
             public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
-                if (object instanceof Long value) {
-                    ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-                    buffer.putLong(value);
-                    return new Message(buffer.array(), messageProperties);
+                if (!(object instanceof Long)) {
+                    throw new MessageConversionException("Payload must be a Long");
                 }
-                throw new MessageConversionException("Payload must be a Long");
+                ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+                buffer.putLong((Long) object);
+                return new Message(buffer.array(), messageProperties);
             }
 
             @Override
             public Object fromMessage(Message message) throws MessageConversionException {
                 byte[] body = message.getBody();
-                if (body == null || body.length == 0) {
-                    return null;
-                }
                 ByteBuffer buffer = ByteBuffer.wrap(body);
                 return buffer.getLong();
             }
