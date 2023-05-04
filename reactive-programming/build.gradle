@@ -10,10 +10,9 @@ version '0.0.1'
 
 ext {
     junitVersion = '5.8.1'
-    r2dbcMySqlVersion = '0.8.2.RELEASE'
-    mySqlConnectorVersion = '8.0.22'
-    mariadDbConnectorVersion = '1.1.4'
-    asyncerMySqlVersion = '1.0.1'
+    r2dbcMySqlVersion = '1.0.1'
+    mySqlConnectorVersion= '8.0.33'
+    testcontainersVersion = '1.18.0'
 }
 
 sourceCompatibility = '1.17'
@@ -29,12 +28,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation "io.asyncer:r2dbc-mysql:${r2dbcMySqlVersion}"
 
-//    implementation "dev.miku:r2dbc-mysql:${r2dbcMySqlVersion}"
-//    implementation "org.mariadb:r2dbc-mariadb:${mariadDbConnectorVersion}"
-//    implementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
-    implementation "io.asyncer:r2dbc-mysql:${asyncerMySqlVersion}"
-
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+    testImplementation "org.testcontainers:mysql:${testcontainersVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
