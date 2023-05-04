@@ -1,4 +1,4 @@
-package com.epam.app.model.dto;
+package com.epam.app.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +12,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("sport")
 public class Sport {
     @Id
-    private Integer id;
+    private Long id;
     private String name;
 }

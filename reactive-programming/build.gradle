@@ -12,6 +12,8 @@ ext {
     junitVersion = '5.8.1'
     r2dbcMySqlVersion = '0.8.2.RELEASE'
     mySqlConnectorVersion = '8.0.22'
+    mariadDbConnectorVersion = '1.1.4'
+    asyncerMySqlVersion = '1.0.1'
 }
 
 sourceCompatibility = '1.17'
@@ -28,8 +30,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 
-    implementation "dev.miku:r2dbc-mysql:${r2dbcMySqlVersion}"
-    implementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
+//    implementation "dev.miku:r2dbc-mysql:${r2dbcMySqlVersion}"
+//    implementation "org.mariadb:r2dbc-mariadb:${mariadDbConnectorVersion}"
+//    implementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
+    implementation "io.asyncer:r2dbc-mysql:${asyncerMySqlVersion}"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
