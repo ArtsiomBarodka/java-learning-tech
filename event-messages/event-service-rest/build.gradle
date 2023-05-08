@@ -1,0 +1,13 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation project(':event-messages:event-service-dto')
+    implementation project(':event-messages:event-service-api')
+    implementation project(':event-messages:event-service-impl')
+    implementation project(':event-messages:event-messaging')
+}
+
+bootJar {
+    enabled = true
+}
+

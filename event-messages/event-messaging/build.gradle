@@ -1,0 +1,25 @@
+ext {
+    kafkaTestcontainersVersion = '1.17.6'
+    rabbitmqTestcontainersVersion = '1.18.0'
+}
+
+dependencies {
+    implementation project(':event-messages:event-service-dto')
+    implementation project(':event-messages:event-service-api')
+    implementation project(':event-messages:event-service-impl')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-artemis'
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    testImplementation "org.testcontainers:junit-jupiter:${kafkaTestcontainersVersion}"
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation "org.testcontainers:kafka:${kafkaTestcontainersVersion}"
+    testImplementation "org.testcontainers:rabbitmq:${rabbitmqTestcontainersVersion}"
+
+}
+
+bootJar {
+    enabled = true
+}

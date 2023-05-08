@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':event-messages:event-service-dto')
+    implementation project(':event-messages:event-service-api')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+}
