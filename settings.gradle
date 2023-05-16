@@ -19,4 +19,5 @@ include 'event-messages:event-service-rest'
 findProject(':event-messages:event-service-rest')?.name = 'event-service-rest'
 include 'event-messages:event-messaging'
 findProject(':event-messages:event-messaging')?.name = 'event-messaging'
+include 'reactive-programming'
 
