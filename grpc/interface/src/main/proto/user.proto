@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package com.grpc.user;
+
+option java_multiple_files = true;
+option java_package = "com.grpc.user";
+
+service UserService {
+  rpc getUserById (GetUserByIdRequest) returns (GetUserByIdResponse);
+  rpc getAllUser (GetAllUserRequest) returns (GetAllUserResponse);
+}
+
+message GetUserByIdRequest {
+  int64 id = 1;
+}
+
+message GetAllUserRequest {}
+
+message GetUserByIdResponse {
+  User user = 1;
+}
+
+message GetAllUserResponse {
+  repeated User users = 1;
+}
+
+message User {
+  int64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string email = 4;
+  int32 age = 5;
+  Gender gender = 6;
+}
+
+enum Gender {
+  MALE = 0;
+  FEMALE = 1;
+  OTHER = 2;
+}
