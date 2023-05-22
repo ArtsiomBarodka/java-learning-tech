@@ -25,4 +25,6 @@ include 'grpc:interface'
 findProject(':grpc:interface')?.name = 'interface'
 include 'grpc:user'
 findProject(':grpc:user')?.name = 'user'
+include 'grpc:client'
+findProject(':grpc:client')?.name = 'client'
 

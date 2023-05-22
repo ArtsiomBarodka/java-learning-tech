@@ -1,14 +1,12 @@
-buildscript {
-    ext {
-        protobufVersion = '3.19.2'
-        protobufPluginVersion = '0.8.18'
-        grpcVersion = '1.43.2'
-    }
+plugins {
+    id 'idea'
+    id 'java-library'
+    id 'com.google.protobuf' version '0.8.18'
 }
 
-plugins {
-    id 'java-library'
-    id 'com.google.protobuf' version "${protobufPluginVersion}"
+ext {
+    protobufVersion = '3.19.2'
+    grpcVersion = '1.43.2'
 }
 
 repositories {
@@ -39,4 +37,13 @@ protobuf {
             grpc {}
         }
     }
-},
+}
+
+idea {
+    module {
+        sourceDirs += file("src/generated/main/java")
+        sourceDirs += file("src/generated/main/grpc")
+        generatedSourceDirs += file("src/generated/main/java")
+        generatedSourceDirs += file("src/generated/main/grpc")
+    }
+}

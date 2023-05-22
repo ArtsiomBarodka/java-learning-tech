@@ -1,4 +1,4 @@
-package com.epam.app.controller;
+package com.epam.app.rest;
 
 import com.epam.app.exception.ObjectNotFoundException;
 import com.fasterxml.jackson.annotation.JsonInclude;

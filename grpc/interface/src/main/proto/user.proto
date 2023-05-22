@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 package com.grpc.user;
 
 option java_multiple_files = true;
@@ -22,6 +24,11 @@ message GetUserByIdResponse {
 
 message GetAllUserResponse {
   repeated User users = 1;
+}
+
+message UserExceptionDetailsResponse {
+  google.protobuf.Timestamp timestamp = 1;
+  string caused = 2;
 }
 
 message User {

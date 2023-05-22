@@ -10,9 +10,6 @@ version '0.0.1'
 
 ext {
     junitVersion = '5.8.1'
-    protobufVersion = '3.19.1'
-    protobufPluginVersion = '0.8.18'
-    grpcVersion = '1.42.1'
 }
 
 subprojects {
