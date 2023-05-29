@@ -1,6 +1,7 @@
 # GRPC Module
 
 ## Diagram
+![alt text](./diagram.png)
 
 ## Task 1:
 * Added Grpc client and server based on JAVA and Spring and using grpc schema (interface module);
