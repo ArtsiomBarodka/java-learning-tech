@@ -1,0 +1,33 @@
+{
+  "type": "record",
+  "namespace": "com.avro",
+  "name": "User",
+  "version": "1",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long",
+      "doc": "Id of User"
+    },
+    {
+      "name": "first_name",
+      "type": "string",
+      "doc": "First Name of User"
+    },
+    {
+      "name": "last_name",
+      "type": "string",
+      "doc": "Last Name of User"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "Email of User"
+    },
+    {
+      "name": "age",
+      "type": "int",
+      "doc": "Age of User"
+    }
+  ]
+}
