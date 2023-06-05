@@ -1,0 +1,17 @@
+ext {
+    grpcStarter = '2.14.0.RELEASE'
+}
+
+dependencies {
+    implementation project(':grpc:interface')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "net.devh:grpc-client-spring-boot-starter:${grpcStarter}"
+
+    testImplementation "net.devh:grpc-server-spring-boot-starter:${grpcStarter}"
+}
+
+bootJar {
+    enabled = true
+}

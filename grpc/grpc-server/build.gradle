@@ -1,0 +1,23 @@
+ext {
+    grpcStarter = '2.14.0.RELEASE'
+    mySqlConnectorVersion = '8.0.22'
+}
+
+dependencies {
+    implementation project(':grpc:interface')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
+
+    implementation "net.devh:grpc-server-spring-boot-starter:${grpcStarter}"
+    implementation "mysql:mysql-connector-java:${mySqlConnectorVersion}"
+
+    testImplementation "net.devh:grpc-client-spring-boot-starter:${grpcStarter}"
+}
+
+bootJar {
+    enabled = true
+}
