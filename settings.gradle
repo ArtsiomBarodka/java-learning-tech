@@ -37,4 +37,7 @@ include 'grpc:kafka-producer-v2'
 findProject(':grpc:kafka-producer-v2')?.name = 'kafka-producer-v2'
 include 'grpc:api-gateway'
 findProject(':grpc:api-gateway')?.name = 'api-gateway'
+include 'kafka-streams'
+include 'kafka-streams:task-1'
+findProject(':kafka-streams:task-1')?.name = 'task-1'
 

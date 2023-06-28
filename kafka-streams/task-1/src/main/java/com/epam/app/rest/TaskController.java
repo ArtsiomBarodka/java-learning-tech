@@ -1,0 +1,18 @@
+package com.epam.app.rest;
+
+import com.epam.app.producer.TopicOneProducer;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+public class TaskController {
+    private final TopicOneProducer producer;
+
+    @PostMapping("/message")
+    public void addMessage(@RequestBody String message) {
+        producer.produceMessage(message);
+    }
+}
