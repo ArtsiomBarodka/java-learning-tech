@@ -27,19 +27,24 @@ subprojects {
         junitVersion = '5.8.1'
         kafkaStreamsVersion = '3.5.0'
         kafkaClientVersion = '3.5.0'
+        kafkaStreamTestVersion = '3.5.0'
+        logcaptorVersion = '2.9.0'
     }
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
 
         implementation "org.apache.kafka:kafka-clients:${kafkaClientVersion}"
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation "org.apache.kafka:kafka-streams:${kafkaStreamsVersion}"
         implementation 'org.springframework.kafka:spring-kafka'
 
-        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation "org.apache.kafka:kafka-streams-test-utils:${kafkaStreamTestVersion}"
+        testImplementation "io.github.hakky54:logcaptor:${logcaptorVersion}"
     }
 
     test {
