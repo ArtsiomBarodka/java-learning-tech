@@ -22,7 +22,7 @@ public class ReadWriteProcessor {
     private String kafkaTopicTask1TwoName;
 
     @Autowired
-    void processPipeline(StreamsBuilder streamsBuilder) {
+    public void processPipeline(StreamsBuilder streamsBuilder) {
         KStream<String, String> stream = streamsBuilder
                 .stream(kafkaTopicTask1OneName, Consumed.with(STRING_SERDE, STRING_SERDE));
 

@@ -40,4 +40,6 @@ findProject(':grpc:api-gateway')?.name = 'api-gateway'
 include 'kafka-streams'
 include 'kafka-streams:task-1'
 findProject(':kafka-streams:task-1')?.name = 'task-1'
+include 'kafka-streams:task-2'
+findProject(':kafka-streams:task-2')?.name = 'task-2'
 
