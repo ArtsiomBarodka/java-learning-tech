@@ -44,4 +44,6 @@ include 'kafka-streams:task-2'
 findProject(':kafka-streams:task-2')?.name = 'task-2'
 include 'kafka-streams:task-3'
 findProject(':kafka-streams:task-3')?.name = 'task-3'
+include 'kafka-streams:task-4'
+findProject(':kafka-streams:task-4')?.name = 'task-4'
 
